@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "foodplan-admin"
+version = "0.1.0"
+description = "Admin pannel for managers."
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^4.2.5"
+
+[tool.poetry.group.dev.dependencies]
+django-extensions = "^3.2.3"
+ipython = "^8.15.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
