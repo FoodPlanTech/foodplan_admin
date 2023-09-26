@@ -10,11 +10,15 @@ poetry install
 Далее, накатите миграции:
 
 ```sh
+make migrate
+# или
 poetry run python manage.py migrate
 ```
 
 и запустите сервер:
 
 ```sh
+make run
+# или
 poetry run python manage.py runserver
 ```
