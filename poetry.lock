@@ -43,6 +43,17 @@ six = ">=1.12.0"
 test = ["astroid", "pytest"]
 
 [[package]]
+name = "babel"
+version = "2.12.1"
+description = "Internationalization utilities"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Babel-2.12.1-py3-none-any.whl", hash = "sha256:b4246fb7677d3b98f501a39d43396d3cafdc8eadb045f4a31be01863f655c610"},
+    {file = "Babel-2.12.1.tar.gz", hash = "sha256:cc2d99999cd01d44420ae725a21c9e3711b3aadc7976d6147f622d8581963455"},
+]
+
+[[package]]
 name = "backcall"
 version = "0.2.0"
 description = "Specifications for callback functions passed in to an API"
@@ -108,6 +119,26 @@ files = [
 
 [package.dependencies]
 Django = ">=3.2"
+
+[[package]]
+name = "django-money"
+version = "3.3.0"
+description = "Adds support for using money and currency fields in django models and forms. Uses py-moneyed as the money implementation."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "django-money-3.3.0.tar.gz", hash = "sha256:5afd4839ec758035c62b214f5d9b61c05687671ddc17d6e452cf0c00207076f1"},
+    {file = "django_money-3.3.0-py3-none-any.whl", hash = "sha256:0ed284972985dd749069dfc5e3dced623083b45b8dda3dee166586164977f6d3"},
+]
+
+[package.dependencies]
+Django = ">=2.2"
+py-moneyed = ">=2.0,<3.1"
+setuptools = "*"
+
+[package.extras]
+exchange = ["certifi"]
+test = ["django-stubs", "mixer", "mypy", "pytest (>=3.1.0)", "pytest-cov", "pytest-django", "pytest-pythonpath"]
 
 [[package]]
 name = "executing"
@@ -274,6 +305,25 @@ files = [
 tests = ["pytest"]
 
 [[package]]
+name = "py-moneyed"
+version = "3.0"
+description = "Provides Currency and Money classes for use in your Python code."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "py-moneyed-3.0.tar.gz", hash = "sha256:4906f0f02cf2b91edba2e156f2d4e9a78f224059ab8c8fa2ff26230c75d894e8"},
+    {file = "py_moneyed-3.0-py3-none-any.whl", hash = "sha256:9583a14f99c05b46196193d8185206e9b73c8439fc8a5eee9cfc7e733676d9bb"},
+]
+
+[package.dependencies]
+babel = ">=2.8.0"
+typing-extensions = ">=3.7.4.3"
+
+[package.extras]
+tests = ["pytest (>=2.3.0)", "tox (>=1.6.0)"]
+type-tests = ["mypy (>=0.812)", "pytest (>=2.3.0)", "pytest-mypy-plugins"]
+
+[[package]]
 name = "pygments"
 version = "2.16.1"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -286,6 +336,22 @@ files = [
 
 [package.extras]
 plugins = ["importlib-metadata"]
+
+[[package]]
+name = "setuptools"
+version = "68.2.2"
+description = "Easily download, build, install, upgrade, and uninstall Python packages"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "setuptools-68.2.2-py3-none-any.whl", hash = "sha256:b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a"},
+    {file = "setuptools-68.2.2.tar.gz", hash = "sha256:4ac1475276d2f1c48684874089fefcd83bd7162ddaafb81fac866ba0db282a87"},
+]
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "pygments-github-lexers (==0.0.5)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-favicon", "sphinx-hoverxref (<2)", "sphinx-inline-tabs", "sphinx-lint", "sphinx-notfound-page (>=1,<2)", "sphinx-reredirects", "sphinxcontrib-towncrier"]
+testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8-2020", "ini2toml[lite] (>=0.9)", "jaraco.develop (>=7.21)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pip (>=19.1)", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-mypy (>=0.9.1)", "pytest-perf", "pytest-ruff", "pytest-timeout", "pytest-xdist", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
+testing-integration = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "packaging (>=23.1)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
 name = "six"
@@ -349,6 +415,17 @@ docs = ["myst-parser", "pydata-sphinx-theme", "sphinx"]
 test = ["argcomplete (>=3.0.3)", "mypy (>=1.5.1)", "pre-commit", "pytest (>=7.0,<7.5)", "pytest-mock", "pytest-mypy-testing"]
 
 [[package]]
+name = "typing-extensions"
+version = "4.8.0"
+description = "Backported and Experimental Type Hints for Python 3.8+"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "typing_extensions-4.8.0-py3-none-any.whl", hash = "sha256:8f92fc8806f9a6b641eaa5318da32b44d401efaac0f6678c9bc448ba3605faa0"},
+    {file = "typing_extensions-4.8.0.tar.gz", hash = "sha256:df8e4339e9cb77357558cbdbceca33c303714cf861d1eef15e1070055ae8b7ef"},
+]
+
+[[package]]
 name = "tzdata"
 version = "2023.3"
 description = "Provider of IANA time zone data"
@@ -373,4 +450,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "4521e78ba1a9f3cc1d99ce7efc72dc55a7288a2d390b4f2474076ece181dbba0"
+content-hash = "645baf4b114556b8b4d8898aebcca6391526c728976f5a6d296ae0dad83f12e0"
