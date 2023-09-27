@@ -13,7 +13,7 @@ class LikedRecipeInline(admin.TabularInline):
     verbose_name = 'Любимый рецепт'
     verbose_name_plural = 'Любимые рецепты'
     model.recipe.field.verbose_name = 'ID рецепта'
-    model.__str__ = lambda _: 'лбимый рецепт'
+    model.__str__ = lambda _: 'любимый рецепт'
 
 
 class DislikedRecipeInline(admin.TabularInline):

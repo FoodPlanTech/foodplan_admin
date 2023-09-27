@@ -19,7 +19,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class RecipeViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsStaffOrReadOnly,)
-    queryset = Recipe.objects.annotate(likes_count=Count('likes')).all()
+    queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
 
 

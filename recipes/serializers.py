@@ -6,8 +6,6 @@ from .models import Recipe
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    likes_count = serializers.IntegerField()
-
     class Meta:
         model = Recipe
         fields = (
@@ -16,7 +14,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             'guide',
             'image',
             'ingredients',
-            'likes_count',
         )
         depth = 1
 
@@ -31,4 +28,5 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name',
             'email',
             'liked_recipes',
+            'disliked_recipes',
         )
