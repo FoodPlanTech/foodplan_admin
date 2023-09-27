@@ -64,10 +64,10 @@ INSTALLED_APPS = [
     # Local Apps
     'accounts',
     'recipes',
-
-    # Development
-    'django_extensions',
 ]
+
+if DEBUG:
+    INSTALLED_APPS.append('django_extensions')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
