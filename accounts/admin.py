@@ -6,10 +6,25 @@ from .models import CustomUser
 from recipes.models import Recipe
 
 
-class FavouriteRecipeInline(admin.TabularInline):
+class LikedRecipeInline(admin.TabularInline):
     model = Recipe.likes.through
     extra = 0
     raw_id_fields = ['recipe']
+    verbose_name = 'Любимый рецепт'
+    verbose_name_plural = 'Любимые рецепты'
+    model.recipe.field.verbose_name = 'ID рецепта'
+    model.__str__ = lambda _: 'лбимый рецепт'
+
+
+class DislikedRecipeInline(admin.TabularInline):
+    model = Recipe.dislikes.through
+    extra = 0
+    raw_id_fields = ['recipe']
+    verbose_name = 'Нелюбимый рецепт'
+    verbose_name_plural = 'Нелюбимые рецепты'
+    model.recipe.field.verbose_name = 'ID рецепта'
+    model.__str__ = lambda _: 'нелюбимый рецепт'
+
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
@@ -20,8 +35,8 @@ class CustomUserAdmin(UserAdmin):
         "email",
         "is_staff",
     ]
-    inlines = [FavouriteRecipeInline]
-    raw_id_fields = ('liked_recipes',)
+    inlines = [LikedRecipeInline, DislikedRecipeInline]
+    raw_id_fields = ('liked_recipes', 'disliked_recipes',)
     fieldsets = UserAdmin.fieldsets
     add_fieldsets = UserAdmin.add_fieldsets
 

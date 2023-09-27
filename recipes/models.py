@@ -36,7 +36,12 @@ class Recipe(models.Model):
     likes = models.ManyToManyField(
         get_user_model(),
         related_name='liked_recipes',
-        verbose_name='Кто лайкнул',
+        verbose_name='Кто любит (ID пользователей)',
+        blank=True)
+    dislikes = models.ManyToManyField(
+        get_user_model(),
+        related_name='disliked_recipes',
+        verbose_name='Кто не любит (ID пользователей)',
         blank=True)
 
     def __str__(self):

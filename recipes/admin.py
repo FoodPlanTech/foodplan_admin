@@ -20,5 +20,5 @@ class RecipeIngredientInline(admin.TabularInline):
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('title',)
-    raw_id_fields = ('likes',)
+    raw_id_fields = ('likes', 'dislikes',)
     inlines = [RecipeIngredientInline]
