@@ -6,6 +6,6 @@ from .permissions import IsStaffOrReadOnly
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsStaffOrReadOnly,)
+    # permission_classes = (IsStaffOrReadOnly,)
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
