@@ -11,8 +11,8 @@ class Ingredient(models.Model):
     title = models.CharField('Ингредиент', max_length=200)
     price = MoneyField('Цена', max_digits=14, decimal_places=2,
                        default_currency='RUB')
+    calories = models.IntegerField('Калорийность (ккал)', null=True, blank=True)
     # TODO:
-    # - калорийность
     # - подходит ли вегетерианцам?
     # - тут должна быть единица измерения?
 
@@ -30,9 +30,7 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(
         Ingredient, through='RecipeIngredients',
     )
-    # TODO:
-    # - время приготовления
-    # - инструкция (rich text)?
+    guide = models.TextField('Инструкция', blank=True)
 
     def __str__(self):
         return self.title
