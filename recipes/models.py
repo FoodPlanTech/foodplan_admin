@@ -25,6 +25,8 @@ class Recipe(models.Model):
     Рецепт блюда: борщ, торт «Наполеон», овсянка с молоком и пр.
     """
     title = models.CharField('Название', max_length=200)
+    image = models.ImageField(upload_to='recipes', null=True, blank=True,
+                              verbose_name='Фото блюда')
     ingredients = models.ManyToManyField(
         Ingredient, through='RecipeIngredients',
     )

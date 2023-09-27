@@ -9,6 +9,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "title",
+            'image',
             'ingredients'
         )
         depth = 1

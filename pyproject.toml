@@ -11,6 +11,10 @@ Django = "^4.2.5"
 django-money = "^3.3.0"
 djangorestframework = "^3.14.0"
 django-cors-headers = "^4.2.0"
+pillow = "^10.0.1"
+gunicorn = "^21.2.0"
+whitenoise = "^6.5.0"
+environs = "^9.5.0"
 
 [tool.poetry.group.dev.dependencies]
 django-extensions = "^3.2.3"

@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: gunicorn config.wsgi -b 0.0.0.0:5555
+    volumes:
+       - .:/code
+    ports:
+      - 5555:5555
+    environment:
+      - "DJANGO_SECRET_KEY=02t7%v2t#y*6^sf-wkpnrxmiirllwiwq8^1+u0d=oz48*lj_*#"
