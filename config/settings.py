@@ -171,8 +171,12 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-    'http://localhost:8000',
+    'http://localhost:5555',
+    'http://0.0.0.0:5555',
+    'http://v1131340.hosted-by-vdsina.ru:5555',
 )
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://v1131340.hosted-by-vdsina.ru:5555',
+]
