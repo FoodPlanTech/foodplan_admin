@@ -1,14 +1,11 @@
-from rest_framework import generics
+from rest_framework import viewsets
 
 from .models import Recipe
 from .serializers import RecipeSerializer
+from .permissions import IsStaffOrReadOnly
 
 
-class RecipeList(generics.ListCreateAPIView):
-    queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
-
-
-class RecipeDetail(generics.RetrieveUpdateDestroyAPIView):
+class RecipeViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsStaffOrReadOnly,)
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer

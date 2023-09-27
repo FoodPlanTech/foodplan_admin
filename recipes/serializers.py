@@ -5,8 +5,10 @@ from .models import Recipe
 
 class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
+        model = Recipe
         fields = (
             "id",
             "title",
+            'ingredients'
         )
-        model = Recipe
+        depth = 1
