@@ -8,7 +8,7 @@ class IngredientAdmin(admin.ModelAdmin):
     list_display = ('title', 'price',)
 
 
-class RecipeIngredientInline(admin.StackedInline):
+class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredients
     extra = 3
     verbose_name = 'Ингредиент'
@@ -20,4 +20,5 @@ class RecipeIngredientInline(admin.StackedInline):
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('title',)
+    raw_id_fields = ('likes',)
     inlines = [RecipeIngredientInline]

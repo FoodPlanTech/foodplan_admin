@@ -64,6 +64,9 @@ INSTALLED_APPS = [
     # Local Apps
     'accounts',
     'recipes',
+
+    # Development
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

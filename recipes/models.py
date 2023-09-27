@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
 
 from djmoney.models.fields import MoneyField
 
@@ -11,7 +12,8 @@ class Ingredient(models.Model):
     title = models.CharField('Ингредиент', max_length=200)
     price = MoneyField('Цена', max_digits=14, decimal_places=2,
                        default_currency='RUB')
-    calories = models.IntegerField('Калорийность (ккал)', null=True, blank=True)
+    calories = models.IntegerField(
+        'Калорийность (ккал)', null=True, blank=True)
     # TODO:
     # - подходит ли вегетерианцам?
     # - тут должна быть единица измерения?
@@ -31,6 +33,11 @@ class Recipe(models.Model):
         Ingredient, through='RecipeIngredients',
     )
     guide = models.TextField('Инструкция', blank=True)
+    likes = models.ManyToManyField(
+        get_user_model(),
+        related_name='liked_recipes',
+        verbose_name='Кто лайкнул',
+        blank=True)
 
     def __str__(self):
         return self.title
