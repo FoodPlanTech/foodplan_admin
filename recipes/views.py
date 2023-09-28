@@ -4,7 +4,7 @@ from django.db.models import Count
 from django.contrib.auth import get_user_model
 
 from rest_framework.response import Response
-from rest_framework import viewsets, views, status
+from rest_framework import viewsets, views, status, generics
 
 from .models import Recipe
 from .serializers import RecipeSerializer, UserSerializer
@@ -23,9 +23,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = RecipeSerializer
 
 
-class CurrentRecipeViewSet(views.APIView):
-    def get(self, request):
-        recipes = Recipe.objects.all()
-        rand_recipe = random.choice(list(recipes))
-        serializer = RecipeSerializer(rand_recipe)
-        return Response(serializer.data)
+class TeaserViewSet(generics.ListAPIView):
+    queryset = Recipe.objects.filter(is_teaser=True)
+    serializer_class = RecipeSerializer

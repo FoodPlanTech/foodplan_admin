@@ -43,6 +43,7 @@ class Recipe(models.Model):
         related_name='disliked_recipes',
         verbose_name='Кто не любит (ID пользователей)',
         blank=True)
+    is_teaser = models.BooleanField('Показывать в превью')
 
     def __str__(self):
         return self.title
