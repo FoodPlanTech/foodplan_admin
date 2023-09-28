@@ -1,5 +1,7 @@
 staticfiles/
 media/
+.tool-versions
+gunicorn.pid
 
 # Created by https://www.gitignore.io
 
