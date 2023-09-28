@@ -11,6 +11,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ('created_at', 'amount', 'user')
+    list_filter = ['amount', 'user', 'created_at']
 
 
 @admin.register(UserSubscription)
