@@ -1,20 +1,8 @@
-import random
-
-from django.db.models import Count
-from django.contrib.auth import get_user_model
-
-from rest_framework.response import Response
-from rest_framework import viewsets, views, status, generics
+from rest_framework import viewsets, generics
 
 from .models import Recipe
-from .serializers import RecipeSerializer, UserSerializer
+from .serializers import RecipeSerializer
 from .permissions import IsStaffOrReadOnly
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAdminUser]
-    queryset = get_user_model().objects.all()
-    serializer_class = UserSerializer
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
