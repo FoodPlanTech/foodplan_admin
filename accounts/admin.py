@@ -4,12 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from recipes.models import Recipe
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import CustomUser, TelegramUser
-
-
-@admin.register(TelegramUser)
-class TelegramUserAdmin(admin.ModelAdmin):
-    list_display = ('telegram_id', 'created_at', 'user')
+from .models import CustomUser, TelegramAccount
 
 
 class LikedRecipeInline(admin.TabularInline):
@@ -32,6 +27,10 @@ class DislikedRecipeInline(admin.TabularInline):
     model.__str__ = lambda _: 'нелюбимый рецепт'
 
 
+class TelegramAccountInline(admin.TabularInline):
+    model = TelegramAccount
+
+
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
@@ -43,7 +42,12 @@ class CustomUserAdmin(UserAdmin):
         "telegram",
         "is_staff",
     ]
-    inlines = [LikedRecipeInline, DislikedRecipeInline]
+    inlines = [LikedRecipeInline, DislikedRecipeInline, TelegramAccountInline]
     raw_id_fields = ('liked_recipes', 'disliked_recipes',)
     fieldsets = UserAdmin.fieldsets
     add_fieldsets = UserAdmin.add_fieldsets
+
+
+@admin.register(TelegramAccount)
+class TelegramAccountAdmin(admin.ModelAdmin):
+    list_display = ('telegram_id', 'created_at', 'user')

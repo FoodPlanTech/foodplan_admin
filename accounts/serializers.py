@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
-from .models import TelegramUser
+from .models import TelegramAccount
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -19,11 +19,12 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
 
-class TelegramUserSerializer(serializers.ModelSerializer):
+class TelegramAccountSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TelegramUser
+        model = TelegramAccount
         fields = (
             'id',
             'telegram_id',
+            'user',
             'created_at',
         )

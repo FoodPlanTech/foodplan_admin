@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 
-from .models import TelegramUser
-from .serializers import TelegramUserSerializer, UserSerializer
+from .models import TelegramAccount
+from .serializers import UserSerializer, TelegramAccountSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -10,6 +10,6 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class TelegramUserViewSet(viewsets.ModelViewSet):
-    queryset = TelegramUser.objects.all()
-    serializer_class = TelegramUserSerializer
+class TelegramAccountViewSet(viewsets.ModelViewSet):
+    queryset = TelegramAccount.objects.all()
+    serializer_class = TelegramAccountSerializer
