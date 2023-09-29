@@ -13,7 +13,7 @@ def get_current_recipe(request):
 
     if serializer.is_valid():
         recipe = serializer.create(serializer.data)
-        return Response(recipe, status=status.HTTP_201_CREATED)
+        return Response(recipe, status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
