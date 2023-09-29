@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 
 from djmoney.models.fields import MoneyField
 
+from accounts.models import TelegramAccount
+
 
 class Subscription(models.Model):
     title = models.CharField('Название', max_length=256)
@@ -35,11 +37,11 @@ class UserSubscription(models.Model):
 
 
 class Payment(models.Model):
-    created_at = models.DateTimeField()
-    user = models.ForeignKey(get_user_model(), related_name='payments',
-                             on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now=True)
+    tg_account = models.ForeignKey(TelegramAccount, related_name='payments',
+                                   on_delete=models.CASCADE)
     amount = MoneyField('Сумма', max_digits=14, decimal_places=2,
                         default_currency='RUB')
 
     def __str__(self):
-        return f'{self.user}, {self.created_at}, {self.amount}'
+        return f'{self.tg_account}, {self.created_at}, {self.amount}'

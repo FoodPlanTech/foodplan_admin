@@ -23,7 +23,6 @@ class TelegramAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = TelegramAccount
         fields = (
-            'id',
             'telegram_id',
             'user',
             'created_at',
