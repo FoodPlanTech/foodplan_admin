@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'djmoney',
     'rest_framework',
     'corsheaders',
+    'drf_spectacular',
 
     # Local Apps
     'accounts',
@@ -172,6 +173,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "FoodPlan API",
+    "DESCRIPTION": "HTTP API for Telegram Bot",
+    "VERSION": "0.0.1",
 }
 
 CORS_ORIGIN_WHITELIST = (
