@@ -22,3 +22,30 @@ make run
 # или
 poetry run python manage.py runserver
 ```
+
+## Deploy
+Создать `.env`:
+
+```ini
+DEBUG=False
+SECRET_KEY='...'
+ALLOWED_HOSTS=localhost,0.0.0.0,127.0.0.1,...
+```
+
+Запустить миграции:
+
+```sh
+make migrate
+```
+
+Запустить сервер:
+
+```sh
+make runprod
+```
+
+Остановить сервер:
+
+```sh
+make killprod
+```
