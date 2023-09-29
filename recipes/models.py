@@ -12,11 +12,15 @@ class Ingredient(models.Model):
     title = models.CharField('Ингредиент', max_length=200)
     price = MoneyField('Цена', max_digits=14, decimal_places=2,
                        default_currency='RUB')
-    calories = models.IntegerField(
-        'Калорийность (ккал)', null=True, blank=True)
-    # TODO:
-    # - подходит ли вегетерианцам?
-    # - тут должна быть единица измерения?
+    calories = models.IntegerField('Калорийность (ккал)', null=True,
+                                   blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Preference(models.Model):
+    title = models.CharField(max_length=128, blank=True)
 
     def __str__(self):
         return self.title
@@ -44,6 +48,8 @@ class Recipe(models.Model):
         verbose_name='Кто не любит (ID пользователей)',
         blank=True)
     is_teaser = models.BooleanField('Показывать в превью')
+    preferences = models.ManyToManyField(Preference, related_name='recipes',
+                                         verbose_name='Предпочтения')
 
     def __str__(self):
         return self.title
@@ -65,3 +71,15 @@ class RecipeIngredients(models.Model):
     amount = models.IntegerField('Вес/Объём/Кол-во')
     units = models.CharField('Ед. измерения', max_length=56, choices=Units.choices,
                              default=Units.GRAMS)
+
+
+class FoodPlan(models.Model):
+    user = models.OneToOneField(
+        get_user_model(),
+        related_name='food_plan',
+        verbose_name='Пользователь',
+        on_delete=models.CASCADE,
+        primary_key=True
+    )
+    preferences = models.ManyToManyField(Preference, related_name='food_plans',
+                                  verbose_name='Предпочтения')
