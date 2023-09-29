@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
 from djmoney.models.fields import MoneyField
+from accounts.models import TelegramAccount
 
 
 class Ingredient(models.Model):
@@ -74,12 +75,12 @@ class RecipeIngredients(models.Model):
 
 
 class FoodPlan(models.Model):
-    user = models.OneToOneField(
-        get_user_model(),
+    tg_account = models.OneToOneField(
+        TelegramAccount,
         related_name='food_plan',
-        verbose_name='Пользователь',
+        verbose_name='Telegram ID',
         on_delete=models.CASCADE,
-        primary_key=True
+        primary_key=True,
     )
     preferences = models.ManyToManyField(Preference, related_name='food_plans',
-                                  verbose_name='Предпочтения')
+                                         verbose_name='Предпочтения')

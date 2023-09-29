@@ -36,8 +36,8 @@ class RecipeAdmin(admin.ModelAdmin):
 
 @admin.register(FoodPlan)
 class FoodPlanAdmin(admin.ModelAdmin):
-    list_display = ('user', 'list_preferences')
-    list_filter = ('preferences', 'user')
+    list_display = ('tg_account', 'list_preferences')
+    list_filter = ('preferences', 'tg_account')
 
     @admin.display(description='Предпочтения',)
     def list_preferences(self, obj):
