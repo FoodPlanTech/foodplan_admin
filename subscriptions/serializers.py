@@ -23,20 +23,22 @@ class PaymentSerializer(serializers.ModelSerializer):
         model = Payment
         fields = (
             'id',
-            'user',
+            'tg_account',
             'amount',
             'created_at',
         )
 
 
 class CreatePaymentBodySerializer(serializers.Serializer):
-    telegram_id = serializers.PrimaryKeyRelatedField(queryset=TelegramAccount.objects.all(), required=True)
-    subscription_id = serializers.IntegerField()
+    telegram_id = serializers.PrimaryKeyRelatedField(
+        queryset=TelegramAccount.objects.all(), required=True)
+    subscription_id = serializers.PrimaryKeyRelatedField(
+        queryset=Subscription.objects.all(), required=True)
 
     def create(self, validated_data):
         subscription_id = validated_data.get('subscription_id')
         amount = Subscription.objects.get(pk=subscription_id).price
         telegram_id = validated_data.get('telegram_id')
-        tg_user = TelegramAccount.objects.get(pk=telegram_id)
-        payment = Payment.objects.create(user_id=tg_user, amount=amount)
+        tg_account = TelegramAccount.objects.get(pk=telegram_id)
+        payment = Payment.objects.create(tg_account=tg_account, amount=amount)
         return PaymentSerializer(payment).data
