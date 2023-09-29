@@ -37,6 +37,6 @@ class CreatePaymentBodySerializer(serializers.Serializer):
         subscription_id = validated_data.get('subscription_id')
         amount = Subscription.objects.get(pk=subscription_id).price
         telegram_id = validated_data.get('telegram_id')
-        tg_user = get_object_or_404(TelegramAccount, pk=telegram_id)
+        tg_user = TelegramAccount.objects.get(pk=telegram_id)
         payment = Payment.objects.create(user_id=tg_user, amount=amount)
         return PaymentSerializer(payment).data

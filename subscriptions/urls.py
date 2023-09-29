@@ -8,5 +8,5 @@ router = SimpleRouter()
 router.register('subscriptions', SubscriptionViewSet, basename='subscriptions')
 
 urlpatterns = [
-    path('payments', create_payment, name='payments'),
+    path('payments/', create_payment, name='payments'),
 ] + router.urls

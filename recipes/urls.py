@@ -10,6 +10,6 @@ router.register('recipes', RecipeViewSet, basename='recipes')
 router.register('foodplans', FoodPlanViewSet, basename='foodplans')
 
 urlpatterns = [
-    path('teasers', TeaserViewSet.as_view(), name='teasers'),
-    path('preferences', PreferenceViewSet.as_view(), name='preferences'),
+    path('teasers/', TeaserViewSet.as_view(), name='teasers'),
+    path('preferences/', PreferenceViewSet.as_view(), name='preferences'),
 ] + router.urls
