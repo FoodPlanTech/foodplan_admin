@@ -44,7 +44,7 @@ class GetRecipeQuerySerializer(serializers.Serializer):
     telegram_id = serializers.PrimaryKeyRelatedField(
         queryset=TelegramAccount.objects.all(), required=True)
 
-    def create(self, validated_data):
+    def create(self, validated_data, request):
         telegram_id = validated_data.get('telegram_id')
 
         foodplan = FoodPlan.objects.filter(pk=telegram_id) \
@@ -52,4 +52,4 @@ class GetRecipeQuerySerializer(serializers.Serializer):
         preferences = foodplan.preferences.all()
         recipes = Recipe.objects.filter(preferences__in=preferences)
         recipe = random.choice(recipes)
-        return RecipeSerializer(recipe).data
+        return RecipeSerializer(recipe, context={'request': request}).data

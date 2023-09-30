@@ -9,10 +9,11 @@ from .permissions import IsStaffOrReadOnly
 
 @api_view(['GET'])
 def get_current_recipe(request):
-    serializer = GetRecipeQuerySerializer(data=request.query_params)
+    serializer = GetRecipeQuerySerializer(
+        data=request.query_params)
 
     if serializer.is_valid():
-        recipe = serializer.create(serializer.data)
+        recipe = serializer.create(serializer.data, request)
         return Response(recipe, status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
