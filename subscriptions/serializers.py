@@ -1,12 +1,11 @@
-from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
-from datetime import datetime
-
+from django.db import IntegrityError
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
-from .models import Subscription, Payment
 from accounts.models import TelegramAccount
 from recipes.models import FoodPlan, Preference
+
+from .models import Payment, Subscription
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
@@ -50,8 +49,13 @@ class CreatePaymentBodySerializer(serializers.Serializer):
         preference_ids = validated_data.get('preference_ids')
         preferences = Preference.objects.filter(id__in=preference_ids)
 
-        foodplan = FoodPlan.objects.create(tg_account_id=telegram_id) \
-            .preferences.set(preferences)
+        try:
+            FoodPlan.objects.create(tg_account_id=telegram_id) \
+                .preferences.set(preferences)
+            payment = Payment.objects.create(
+                tg_account=tg_account, amount=amount)
+            return PaymentSerializer(payment).data
 
-        payment = Payment.objects.create(tg_account=tg_account, amount=amount)
-        return PaymentSerializer(payment).data
+        except IntegrityError as error:
+            raise ValidationError(
+                f'FoodPlan для Telegram ID {telegram_id} уже существует.') from error
