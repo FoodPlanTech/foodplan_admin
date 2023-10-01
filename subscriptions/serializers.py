@@ -8,7 +8,14 @@ from recipes.models import FoodPlan, Preference
 from .models import Payment, Subscription
 
 
+class MoneySerializer(serializers.Serializer):
+    amount = serializers.IntegerField()
+    currency = serializers.CharField()
+
+
 class SubscriptionSerializer(serializers.ModelSerializer):
+    price = MoneySerializer()
+
     class Meta:
         model = Subscription
         fields = (

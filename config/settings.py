@@ -57,16 +57,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third Party
-    'djmoney',
     'rest_framework',
     'corsheaders',
     'drf_spectacular',
+    'djmoney',
 
     # Local Apps
     'accounts',
     'subscriptions',
     'recipes',
 ]
+
+SERIALIZATION_MODULES = {"json": "djmoney.serializers"}
 
 if DEBUG:
     INSTALLED_APPS.append('django_extensions')
