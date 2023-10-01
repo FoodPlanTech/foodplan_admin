@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 
 from djmoney.models.fields import MoneyField
 from accounts.models import TelegramAccount
+from subscriptions.models import Subscription
 
 
 class Ingredient(models.Model):
@@ -84,3 +85,20 @@ class FoodPlan(models.Model):
     )
     preferences = models.ManyToManyField(Preference, related_name='food_plans',
                                          verbose_name='Предпочтения')
+    recipes_count = models.PositiveSmallIntegerField('Кол-во рецептов',
+                                                     default=1, null=True, blank=True)
+    subscription = models.ForeignKey(
+        Subscription, related_name='food_plans', on_delete=models.CASCADE,
+        verbose_name='Подписка',
+        null=True, blank=True)
+    start_date = models.DateField(
+        'Начало', auto_now=True, null=True, blank=True)
+
+    @property
+    def end_date(self):
+        verbose_name = 'Конец'
+        if self.start_date:
+            return self.start_date + self.subscription.duration
+
+    def __str__(self):
+        return f'{self.subscription}, {self.tg_account}, {self.start_date}—{self.end_date}'

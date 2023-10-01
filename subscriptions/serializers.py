@@ -43,8 +43,11 @@ class CreatePaymentBodySerializer(serializers.Serializer):
         many=True,
         queryset=Preference.objects.all(),
         required=True)
+    recipes_count = serializers.IntegerField(max_value=3, min_value=1, required=False)
 
     def create(self, validated_data):
+        recipes_count = validated_data.get('recipes_count') or 1
+
         subscription_id = validated_data.get('subscription_id')
         amount = Subscription.objects.get(pk=subscription_id).price
 
@@ -59,7 +62,11 @@ class CreatePaymentBodySerializer(serializers.Serializer):
         try:
             Payment.objects.create(
                 tg_account=tg_account, amount=amount)
-            foodplan = FoodPlan.objects.create(tg_account_id=telegram_id)
+            foodplan = FoodPlan.objects.create(
+                tg_account_id=telegram_id,
+                recipes_count=recipes_count,
+                subscription_id=subscription_id,
+            )
             foodplan.preferences.set(preferences)
             return FoodPlanSerializer(foodplan).data
 
