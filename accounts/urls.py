@@ -1,10 +1,7 @@
-from rest_framework.routers import SimpleRouter
+from django.urls import path
 
-from .views import UserViewSet, TelegramAccountViewSet
-
-router = SimpleRouter()
-router.register('users', UserViewSet, basename='users')
-router.register('tg-accounts', TelegramAccountViewSet, basename='tg_accounts')
+from .views import TelegramAccountCreateViewSet
 
 urlpatterns = [
-] + router.urls
+    path('tg-accounts/', TelegramAccountCreateViewSet.as_view(), name='tg-accounts'),
+]

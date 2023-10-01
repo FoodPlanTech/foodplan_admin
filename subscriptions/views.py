@@ -1,25 +1,20 @@
-import random
+from rest_framework import generics, status
 from rest_framework.decorators import api_view
-
-
-from django.db.models import Count
-from django.contrib.auth import get_user_model
-
 from rest_framework.response import Response
-from rest_framework import viewsets, views, status, generics
 
-from .models import Subscription, Payment
-from .serializers import SubscriptionSerializer, PaymentSerializer, \
-    CreatePaymentBodySerializer
+from .models import Subscription
+from .serializers import CreatePaymentBodySerializer, SubscriptionSerializer
 
 
-class SubscriptionViewSet(viewsets.ModelViewSet):
+class SubscriptionListViewSet(generics.ListAPIView):
+    """Список вариантов подписок."""
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
 
 @api_view(['POST'])
 def create_payment(request):
+    """Зафиксировать платёж и создать фудплан для пользователя."""
     serializer = CreatePaymentBodySerializer(data=request.data)
 
     if serializer.is_valid():

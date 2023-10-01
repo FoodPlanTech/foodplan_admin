@@ -1,6 +1,9 @@
 run:
 	poetry run python manage.py runserver
 
+api:
+	poetry run python manage.py show_urls | rg '^/api/v1/'
+
 migrate:
 	poetry run python manage.py migrate
 

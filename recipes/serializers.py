@@ -1,11 +1,10 @@
 import random
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
-
 from rest_framework.exceptions import ValidationError
-from .models import Recipe, FoodPlan, Preference
+
 from accounts.models import TelegramAccount
-from subscriptions.models import Subscription
+
+from .models import FoodPlan, Recipe
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -29,16 +28,6 @@ class PreferenceSerializer(serializers.ModelSerializer):
             'id',
             'title',
         )
-
-
-class FoodPlanSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FoodPlan
-        fields = (
-            'tg_account',
-            'preferences',
-        )
-        depth = 1
 
 
 class GetRecipeQuerySerializer(serializers.Serializer):
