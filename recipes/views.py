@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .models import Preference, Recipe
 from .permissions import IsStaffOrReadOnly
 from .serializers import (GetRecipeQuerySerializer, PreferenceSerializer,
-                          RecipeSerializer)
+                          RecipeSerializer, CreateLikeSerializer)
 
 
 class CurrentRecipeViewSet(viewsets.ReadOnlyModelViewSet):
@@ -50,3 +50,33 @@ class PreferenceListViewSet(generics.ListAPIView):
     """Список возможных предпочтений в рационе."""
     queryset = Preference.objects.all()
     serializer_class = PreferenceSerializer
+
+
+class CreateLikeViewSet(generics.CreateAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = CreateLikeSerializer
+
+    def create(self, request):
+        """Зафиксировать платёж и создать фудплан для пользователя."""
+        serializer = CreateLikeSerializer(data=request.data)
+
+        if serializer.is_valid():
+            recipe = serializer.update(serializer.data)
+            return Response(recipe, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CreateDislikeViewSet(generics.CreateAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = CreateLikeSerializer
+
+    def create(self, request):
+        """Зафиксировать платёж и создать фудплан для пользователя."""
+        serializer = CreateLikeSerializer(data=request.data)
+
+        if serializer.is_valid():
+            recipe = serializer.update(serializer.data, is_dislike=True)
+            return Response(recipe, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

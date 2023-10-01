@@ -39,12 +39,12 @@ class Recipe(models.Model):
     )
     guide = models.TextField('Инструкция', blank=True)
     likes = models.ManyToManyField(
-        get_user_model(),
+        TelegramAccount,
         related_name='liked_recipes',
         verbose_name='Кто любит (ID пользователей)',
         blank=True)
     dislikes = models.ManyToManyField(
-        get_user_model(),
+        TelegramAccount,
         related_name='disliked_recipes',
         verbose_name='Кто не любит (ID пользователей)',
         blank=True)

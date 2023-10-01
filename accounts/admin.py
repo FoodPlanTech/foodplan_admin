@@ -42,8 +42,7 @@ class CustomUserAdmin(UserAdmin):
         "telegram",
         "is_staff",
     ]
-    inlines = [LikedRecipeInline, DislikedRecipeInline, TelegramAccountInline]
-    raw_id_fields = ('liked_recipes', 'disliked_recipes',)
+    inlines = [TelegramAccountInline]
     fieldsets = UserAdmin.fieldsets
     add_fieldsets = UserAdmin.add_fieldsets
 
@@ -51,3 +50,5 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(TelegramAccount)
 class TelegramAccountAdmin(admin.ModelAdmin):
     list_display = ('telegram_id', 'created_at', 'user')
+    inlines = [LikedRecipeInline, DislikedRecipeInline]
+    raw_id_fields = ('liked_recipes', 'disliked_recipes',)
