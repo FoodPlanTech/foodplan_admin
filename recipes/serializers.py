@@ -34,7 +34,7 @@ class GetRecipeQuerySerializer(serializers.Serializer):
     telegram_id = serializers.PrimaryKeyRelatedField(
         queryset=TelegramAccount.objects.all(), required=True)
 
-    def create(self, validated_data, request):
+    def retrieve(self, validated_data, request):
         telegram_id = validated_data.get('telegram_id')
 
         foodplan = FoodPlan.objects.filter(pk=telegram_id) \

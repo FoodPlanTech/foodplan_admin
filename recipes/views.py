@@ -1,22 +1,36 @@
-from rest_framework import viewsets, generics, status
-from rest_framework.decorators import api_view
+from drf_spectacular.utils import OpenApiParameter, extend_schema
+from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
 
-from .models import Recipe, Preference
-from .serializers import RecipeSerializer, PreferenceSerializer, GetRecipeQuerySerializer
+from .models import Preference, Recipe
 from .permissions import IsStaffOrReadOnly
+from .serializers import (GetRecipeQuerySerializer, PreferenceSerializer,
+                          RecipeSerializer)
 
 
-@api_view(['GET'])
-def get_current_recipe(request):
-    """Просмотр рекомендуемого рецепта пользователя в соответствии с предпочтениями."""
-    serializer = GetRecipeQuerySerializer(data=request.query_params)
+class CurrentRecipeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
 
-    if serializer.is_valid():
-        recipe = serializer.create(serializer.data, request)
-        return Response(recipe, status=status.HTTP_200_OK)
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='telegram_id',
+                description='Telegram ID пользователя',
+                required=True,
+                type=int),
+        ]
+    )
+    def retrieve(self, request):
+        """Просмотр рекомендуемого рецепта пользователя в соответствии с предпочтениями."""
+        # return self.list(request, *args, **kwargs)
+        serializer = GetRecipeQuerySerializer(data=request.query_params)
 
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if serializer.is_valid():
+            recipe = serializer.retrieve(serializer.data, request)
+            return Response(recipe, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RecipeReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
