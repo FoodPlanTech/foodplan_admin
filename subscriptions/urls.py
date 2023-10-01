@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import SubscriptionListViewSet, create_payment
+from .views import SubscriptionListViewSet, CreatePaymentViewSet
 
 urlpatterns = [
-    path('payments/', create_payment, name='payments'),
+    path('payments/', CreatePaymentViewSet.as_view(), name='payments'),
     path('subscriptions/', SubscriptionListViewSet.as_view(), name='subscriptions'),
 ]
