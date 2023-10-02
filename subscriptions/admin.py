@@ -12,8 +12,3 @@ class SubscriptionAdmin(admin.ModelAdmin):
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ('created_at', 'amount', 'tg_account')
     list_filter = ['amount', 'tg_account', 'created_at']
-
-
-@admin.register(UserSubscription)
-class UserSubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('subscription', 'start_date', 'end_date', 'user')

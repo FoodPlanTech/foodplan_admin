@@ -17,6 +17,7 @@ class Subscription(models.Model):
         return self.title
 
 
+# TODO: эта модель не нужна, удалить.
 class UserSubscription(models.Model):
     """Связывает подписку с пользователем.
 
