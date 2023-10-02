@@ -12,5 +12,5 @@ urlpatterns = [
     path('likes/', CreateLikeViewSet.as_view(), name='likes'),
     path('dislikes/', CreateDislikeViewSet.as_view(), name='dislikes'),
     path('preferences/', PreferenceListViewSet.as_view(), name='preferences'),
-    path('current-recipe/', CurrentRecipeViewSet.as_view({'get': 'retrieve'}), name='preferences'),
+    path('current-recipe/', CurrentRecipeViewSet.as_view(), name='preferences'),
 ] + router.urls

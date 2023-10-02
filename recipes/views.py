@@ -1,36 +1,43 @@
-from drf_spectacular.utils import OpenApiParameter, extend_schema
+import random
 from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError, ParseError
 
-from .models import Preference, Recipe
+from .models import Preference, Recipe, FoodPlan
 from .permissions import IsStaffOrReadOnly
-from .serializers import (GetRecipeQuerySerializer, PreferenceSerializer,
+from .serializers import (PreferenceSerializer,
                           RecipeSerializer, CreateLikeSerializer)
 
 
-class CurrentRecipeViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Recipe.objects.all()
+class CurrentRecipeViewSet(generics.ListAPIView):
     serializer_class = RecipeSerializer
 
-    @extend_schema(
-        parameters=[
-            OpenApiParameter(
-                name='telegram_id',
-                description='Telegram ID пользователя',
-                required=True,
-                type=int),
-        ]
-    )
-    def retrieve(self, request):
-        """Просмотр рекомендуемого рецепта пользователя в соответствии с предпочтениями."""
-        # return self.list(request, *args, **kwargs)
-        serializer = GetRecipeQuerySerializer(data=request.query_params)
+    def get_queryset(self):
+        resp = Recipe.objects.all()  # should always return queryset
 
-        if serializer.is_valid():
-            recipe = serializer.retrieve(serializer.data, request)
-            return Response(recipe, status=status.HTTP_200_OK)
+        telegram_id = self.request.query_params.get('telegram_id')
+        if not telegram_id:
+            raise ParseError("Не найдет GEt-параметр telegram_id.")
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        foodplan_qs = FoodPlan.objects.filter(pk=telegram_id) \
+            .prefetch_related('preferences')
+        if not foodplan_qs:
+            raise ValidationError(
+                f'FoodPlan для пользователя {telegram_id} не найден.')
+
+        foodplan = foodplan_qs[0]
+        preferences = foodplan.preferences.all()
+        if not preferences:
+            raise ValidationError(
+                f'Предпочтения пользователя {telegram_id} не заполнены.')
+
+        preferred_recipes = Recipe.objects.filter(preferences__in=preferences)
+        preferred_ids = preferred_recipes.values_list(
+            'pk').values_list('id', flat=True)
+        qty = foodplan.recipes_count or 1
+        random_recipe_ids = random.sample(list(preferred_ids), qty)
+        resp = preferred_recipes.filter(pk__in=random_recipe_ids)
+        return resp
 
 
 class RecipeReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
